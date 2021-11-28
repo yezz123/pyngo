@@ -4,3 +4,5 @@ pre-commit
 coverage
 django-stubs
 pytest
+codecov==2.1.12
+pytest-cov==3.0.0
