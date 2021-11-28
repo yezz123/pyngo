@@ -48,5 +48,5 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          pytest --cov-report=html
+          python -m pytest
           codecov
