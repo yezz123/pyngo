@@ -1,12 +1,14 @@
 import sys
 from typing import Any, Dict, List, Optional, Type, TypeVar
+
 from django.http import QueryDict
 from pydantic import BaseModel
 from pydantic.fields import ModelField
 
-if sys.version_info >= (3,8):
+if sys.version_info >= (3, 8):
     from typing import get_origin
 else:
+
     def get_origin(tp: Any) -> Optional[Any]:
         try:
             return tp.__origin__
@@ -15,6 +17,7 @@ else:
 
 
 _QueryDictModel = TypeVar("_QueryDictModel", bound="QueryDictModel")
+
 
 class QueryDictModel(BaseModel):
     @classmethod
