@@ -1,0 +1,6 @@
+-r requirements.txt
+
+pre-commit
+coverage
+django-stubs
+pytest
