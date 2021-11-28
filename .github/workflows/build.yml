@@ -48,5 +48,5 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          python -m pytest --cov=pyngo/ --cov-report=html
+          python -m pytest --cov=pyngo-utils/ --cov-report=html
           codecov
