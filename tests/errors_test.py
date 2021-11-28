@@ -36,9 +36,7 @@ class TestToDRFError:
         try:
             MyModel(int_field=2)
         except ValidationError as e:
-            assert drf_error_details(e) == {
-                "int_field": ["Must be the magic number!"]
-            }
+            assert drf_error_details(e) == {"int_field": ["Must be the magic number!"]}
 
     def test_with_nested_field(self) -> None:
         try:
