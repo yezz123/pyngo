@@ -105,6 +105,8 @@ print(Model.parse_obj(querydict_to_dict(query_dict, Model)))
 print(QueryModel.parse_obj(query_dict))
 ```
 
+> **Note:** Don't forget to Setup the Django Project.
+
 ### Django Rest Framework
 
 - `pyngo.drf_error_details()` will propagate any errors from Pydantic.
@@ -147,7 +149,7 @@ expected_details = {
 }
 
 try:
-   Parent.parse_obj(data)
+   Framework.parse_obj(data)
 except ValidationError as e:
    print(drf_error_details(e))
 ```
