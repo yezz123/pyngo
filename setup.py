@@ -17,7 +17,7 @@ def parse_requirement(req_path: str) -> t.List[str]:
 
 setuptools.setup(
     name="pyngo",
-    version="0.0.1",
+    version="1.0.0",
     author="Yasser Tahiri",
     platforms=["any"],
     description="Utils to help integrate pydantic into Django projects",
