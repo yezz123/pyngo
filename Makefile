@@ -6,7 +6,7 @@ help:
 	@echo "    make clean-test"
 
 test:
-	pytest --cov-report=html
+	pytest --cov=pyngo
 
 lint:
 	pre-commit run --all-files
