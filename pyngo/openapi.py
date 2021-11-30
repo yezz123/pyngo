@@ -18,22 +18,11 @@ ParameterDict = TypedDict(
     },
     total=False,
 )
-ParameterDict.__doc__ = """\
-A dictionary representing the fixed fields of an `OpenAPI parameter object
-<https://swagger.io/specification/#parameter-object>`_
-
-:ivar str name:
-:ivar Literal["query", "header", "path", "cookie"] in:
-:ivar str description:
-:ivar bool required:
-:ivar bool deprecated:
-:ivar bool allowEmptyValue:
-"""
 
 _VALID_LOCATIONS = ("query", "header", "path", "cookie")
 
 
-def pydantic_openapi_params(
+def openapi_params(
     model_class: Type[BaseModel],
 ) -> List[ParameterDict]:
     parameters: List[ParameterDict] = []
