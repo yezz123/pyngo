@@ -5,7 +5,7 @@ from django.http import QueryDict
 from pydantic import BaseModel
 from pydantic.fields import ModelField
 
-if sys.version_info >= (3, 7):
+if sys.version_info >= (3, 8):
     from typing import get_origin
 else:
 
