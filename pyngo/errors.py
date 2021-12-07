@@ -34,3 +34,19 @@ def set_nested(data: Dict[str, Any], keys: Sequence[str], value: Any) -> None:
     for key in keys[:-1]:
         data = data.setdefault(str(key), {})
     data[keys[-1]] = value
+
+
+def get_nested(data: Dict[str, Any], keys: Sequence[str]) -> Any:
+    """
+    Get a value from a nested dictionary.
+
+    Args:
+        data (Dict[str, Any]): The dictionary to get the value from.
+        keys (Sequence[str]): The keys to get the value at.
+
+    Returns:
+        Any: The value.
+    """
+    for key in keys[:-1]:
+        data = data[key]
+    return data[keys[-1]]
