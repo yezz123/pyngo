@@ -1,14 +1,16 @@
 # Pyngo
 
+![Pyngo](https://user-images.githubusercontent.com/52716203/145123561-ef58bc47-b5a9-4aaf-b13f-be881cbe6539.png)
+
 <p align="center">
     <em>Utils to help integrate pydantic into Django projects</em>
 </p>
 
 [![codecov](https://codecov.io/gh/yezz123/pyngo-utils/branch/main/graph/badge.svg?token=QAGGVJ8URH)](https://codecov.io/gh/yezz123/pyngo-utils)
 [![PyPI version](https://badge.fury.io/py/pyngo.svg)](https://badge.fury.io/py/pyngo)
-[![Downloads](https://pepy.tech/badge/pyngo/month)](https://pepy.tech/project/pyngo)
+[![License](https://img.shields.io/badge/License-MIT-green?style)](https://opensource.org/licenses/MIT)
 [![Language](https://img.shields.io/badge/Language-Python-green?style)](https://github.com/yezz123)
-[![framework](https://img.shields.io/badge/Framework-Django-green?style)](https://fastapi.tiangolo.com/)
+[![framework](https://img.shields.io/badge/Framework-Django-green?style)](https://www.djangoproject.com/)
 [![Pypi](https://img.shields.io/pypi/pyversions/pyngo.svg?color=%2334D058)](https://pypi.org/project/pyngo)
 
 ---
