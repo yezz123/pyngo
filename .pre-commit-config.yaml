@@ -9,8 +9,6 @@ repos:
           - id: trailing-whitespace
           - id: check-json
           - id: debug-statements
-          - id: pretty-format-json
-            args: ["--autofix", "--allow-missing-credentials"]
     - repo: https://github.com/PyCQA/isort
       rev: 5.10.1
       hooks:
