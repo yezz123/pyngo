@@ -1,6 +1,0 @@
-{
-     "makefile.extensionOutputFolder": "./.vscode",
-     "yaml.schemas": {
-          "https://json.schemastore.org/github-workflow.json": "file:///Users/yezz123/Desktop/Github/pyngo-utils/.github/workflows/build.yml"
-     }
-}
