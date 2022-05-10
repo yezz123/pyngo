@@ -1,0 +1,45 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "pyngo"
+dist-name = "pyngo"
+author = "Yasser Tahiri"
+author-email = "yasserth19@gmail.com"
+home-page = "https://github.com/yezz123/pyngo"
+classifiers = [
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Information Technology",
+        "Natural Language :: English",
+        "Framework :: Django",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Internet :: WWW/HTTP :: Session",
+        "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+        "Topic :: Utilities",
+        "Typing :: Typed",
+]
+description-file = "README.md"
+requires-python = ">=3.7"
+requires = [
+    "pydantic==1.9.0",
+    "Django==3.2.13",
+    "typing_extensions>=3.7.4.3"
+]
+
+[tool.flit.metadata.requires-extra]
+dev = [
+    "pre-commit==2.19.0",
+    "coverage==6.3.2",
+    "django-stubs==1.10.1",
+    "pytest==7.1.2",
+    "codecov==2.1.12",
+    "pytest-cov==3.0.0"
+]

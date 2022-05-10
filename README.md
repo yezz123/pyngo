@@ -1,15 +1,12 @@
-# Pyngo
-
-![Pyngo](https://user-images.githubusercontent.com/52716203/145123561-ef58bc47-b5a9-4aaf-b13f-be881cbe6539.png)
+# Pyngo :snake:
 
 <p align="center">
     <em>Utils to help integrate pydantic into Django projects</em>
 </p>
 
-[![codecov](https://codecov.io/gh/yezz123/pyngo-utils/branch/main/graph/badge.svg?token=QAGGVJ8URH)](https://codecov.io/gh/yezz123/pyngo-utils)
+[![Downloads](https://pepy.tech/badge/pyngo)](https://pepy.tech/project/pyngo)
+[![codecov](https://codecov.io/gh/yezz123/pyngo/branch/main/graph/badge.svg)](https://codecov.io/gh/yezz123/pyngo)
 [![PyPI version](https://badge.fury.io/py/pyngo.svg)](https://badge.fury.io/py/pyngo)
-[![License](https://img.shields.io/badge/License-MIT-green?style)](https://opensource.org/licenses/MIT)
-[![Language](https://img.shields.io/badge/Language-Python-green?style)](https://github.com/yezz123)
 [![framework](https://img.shields.io/badge/Framework-Django-green?style)](https://www.djangoproject.com/)
 [![Pypi](https://img.shields.io/pypi/pyversions/pyngo.svg?color=%2334D058)](https://pypi.org/project/pyngo)
 
@@ -158,20 +155,16 @@ except ValidationError as e:
 
 ## Development 🚧
 
-You should create a virtual environment and activate it:
+- We use [Flit](https://flit.readthedocs.io/) as a dependency manager, thats why we need to setup it before installing all requirements of development and testing.
 
-```bash
-python -m venv venv/
+```sh
+pip install flit
 ```
 
-```bash
-source venv/bin/activate
-```
+- Now we can install dependencies for development and testing.
 
-And then install the development dependencies:
-
-```bash
-pip install -r requirements.dev.txt
+```sh
+flit install --symlink
 ```
 
 ### Test the code 📚

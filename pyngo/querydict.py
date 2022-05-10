@@ -1,5 +1,5 @@
 import sys
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, Optional, Type, TypeVar
 
 from django.http import QueryDict
 from pydantic import BaseModel
@@ -78,7 +78,4 @@ def _is_list_field(field: ModelField) -> bool:
     Returns:
         bool: True if the field is a list field, False otherwise.
     """
-    if sys.version_info >= (3, 7):
-        return get_origin(field.outer_type_) == list
-    else:
-        return get_origin(field.outer_type_) == List
+    return get_origin(field.outer_type_) == list
