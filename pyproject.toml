@@ -16,7 +16,6 @@ classifiers = [
         "Natural Language :: English",
         "Framework :: Django",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -28,7 +27,7 @@ classifiers = [
         "Typing :: Typed",
 ]
 description-file = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.7"
 requires = [
     "pydantic==1.9.0",
     "Django==3.2.13",
