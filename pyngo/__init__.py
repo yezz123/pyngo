@@ -1,6 +1,6 @@
 """Pyngo: Pydantic Package for Adding Models into a Django or Django Rest Framework Project"""
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 from .errors import drf_error_details
 from .openapi import ParameterDict, openapi_params
