@@ -32,7 +32,7 @@ classifiers = [
 
 dependencies = [
     "typing-extensions >=3.7.4,<4.5.0",
-    "pydantic >=1.6.2,!=1.7,!=1.7.1,!=1.7.2,!=1.7.3,!=1.8,!=1.8.1,<2.0.0",
+    "pydantic >=1.8.2,<2.0.0",
     "Django >=3.2.0,<4.0.0",
 ]
 
