@@ -15,7 +15,7 @@ def drf_error_details(exception: ValidationError) -> Dict[str, Any]:
     """
     drf_data: Dict[str, Any] = {}
     for error in exception.errors():
-        set_nested(drf_data, error["loc"], [error["msg"]])
+        set_nested(drf_data, error["loc"], [error["msg"]])  # type: ignore
     return drf_data
 
 
