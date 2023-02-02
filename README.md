@@ -4,11 +4,20 @@
     <em>Utils to help integrate pydantic into Django projects</em>
 </p>
 
-[![Downloads](https://pepy.tech/badge/pyngo)](https://pepy.tech/project/pyngo)
-[![codecov](https://codecov.io/gh/yezz123/pyngo/branch/main/graph/badge.svg)](https://codecov.io/gh/yezz123/pyngo)
-[![PyPI version](https://badge.fury.io/py/pyngo.svg)](https://badge.fury.io/py/pyngo)
-[![framework](https://img.shields.io/badge/Framework-Django-green?style)](https://www.djangoproject.com/)
-[![Pypi](https://img.shields.io/pypi/pyversions/pyngo.svg?color=%2334D058)](https://pypi.org/project/pyngo)
+<p align="center">
+<a href="https://github.com/yezz123/pyngo/actions/workflows/test.yml" target="_blank">
+    <img src="https://github.com/yezz123/pyngo/actions/workflows/test.yml/badge.svg" alt="Test">
+</a>
+<a href="https://codecov.io/gh/yezz123/pyngo">
+    <img src="https://codecov.io/gh/yezz123/pyngo/branch/main/graph/badge.svg"/>
+</a>
+<a href="https://pypi.org/project/pyngo" target="_blank">
+    <img src="https://img.shields.io/pypi/v/pyngo?color=%2334D058&label=pypi%20package" alt="Package version">
+</a>
+<a href="https://pypi.org/project/pyngo" target="_blank">
+    <img src="https://img.shields.io/pypi/pyversions/pyngo.svg?color=%2334D058" alt="Supported Python versions">
+</a>
+</p>
 
 ---
 
