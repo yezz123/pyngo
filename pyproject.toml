@@ -1,45 +1,120 @@
 [build-system]
-requires = ["flit"]
-build-backend = "flit.buildapi"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.flit.metadata]
-module = "pyngo"
-dist-name = "pyngo"
-author = "Yasser Tahiri"
-author-email = "yasserth19@gmail.com"
-home-page = "https://github.com/yezz123/pyngo"
-classifiers = [
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-        "Intended Audience :: Developers",
-        "Intended Audience :: Information Technology",
-        "Natural Language :: English",
-        "Framework :: Django",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3 :: Only",
-        "Topic :: Internet :: WWW/HTTP :: Session",
-        "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
-        "Topic :: Utilities",
-        "Typing :: Typed",
-]
-description-file = "README.md"
+[project]
+name = "pyngo"
+description = "Pydantic Package for Adding Models into a Django or Django Rest Framework Project ✨"
+readme = "README.md"
 requires-python = ">=3.7"
-requires = [
-    "pydantic==1.9.0",
-    "Django<4",
-    "typing_extensions>=3.7.4.3"
+license = "MIT"
+authors = [
+    { name = "Yasser Tahiri", email = "hello@yezz.me" },
 ]
 
-[tool.flit.metadata.requires-extra]
-dev = [
-    "pre-commit==2.19.0",
-    "coverage==6.3.2",
-    "django-stubs==1.10.1",
-    "pytest==7.1.2",
-    "codecov==2.1.12",
-    "pytest-cov==3.0.0"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Natural Language :: English",
+    "Framework :: Django",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Internet :: WWW/HTTP :: Session",
+    "Typing :: Typed",
 ]
+
+dependencies = [
+    "typing-extensions >=3.7.4,<4.5.0",
+    "pydantic >=1.6.2,!=1.7,!=1.7.1,!=1.7.2,!=1.7.3,!=1.8,!=1.8.1,<2.0.0",
+    "Django >=3.2.0,<4.0.0",
+]
+
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/yezz123/pyngo"
+Funding = 'https://github.com/sponsors/yezz123'
+
+[project.optional-dependencies]
+lint = [
+    "pre-commit==2.21.0",
+    "mypy==0.991",
+]
+test = [
+    "pytest==7.2.1",
+    "pytest-asyncio == 0.20.3",
+    "codecov==2.1.12",
+    "pytest-cov==4.0.0",
+    "pytest-pretty",
+    "django-stubs",
+]
+
+[tool.hatch.version]
+path = "pyngo/__init__.py"
+
+[tool.isort]
+profile = "black"
+known_third_party = ["pydantic", "typing_extensions"]
+
+[tool.ruff]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.isort]
+known-third-party = ["pydantic", "typing_extensions"]
+
+[tool.mypy]
+plugins = "pydantic.mypy"
+follow_imports = "silent"
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_any_generics = true
+check_untyped_defs = true
+ignore_missing_imports = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "pyngo.tests.*"
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[tool.coverage.report]
+precision = 2
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "raise NotImplemented",
+    "@overload",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.pytest]
+testpaths = "tests/"
+log_cli = "1"
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format= "%Y-%m-%d %H:%M:%S"
+asyncio_mode= "auto"

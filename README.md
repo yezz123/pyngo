@@ -12,7 +12,17 @@
 
 ---
 
-**Install the project**: `pip install pyngo`
+## Installation
+
+You can add pyngo in a few easy steps. First of all, install the dependency:
+
+```sh
+$ pip install pyngo
+
+---> 100%
+
+Successfully installed pyngo
+```
 
 ---
 
@@ -155,32 +165,51 @@ except ValidationError as e:
 
 ## Development 🚧
 
-- We use [Flit](https://flit.readthedocs.io/) as a dependency manager, thats why we need to setup it before installing all requirements of development and testing.
+### Setup environment 📦
 
-```sh
-pip install flit
-```
-
-- Now we can install dependencies for development and testing.
-
-```sh
-flit install --symlink
-```
-
-### Test the code 📚
-
-For Building the tests i use `pytest`, you can run it using a pre-configured command:
+You should create a virtual environment and activate it:
 
 ```bash
-make test
+python -m venv venv/
 ```
 
-### Format the code 💅
+```bash
+source venv/bin/activate
+```
+
+And then install the development dependencies:
+
+```bash
+# Install dependencies
+pip install -e .[test,lint]
+```
+
+### Run tests 🌝
+
+You can run all the tests with:
+
+```bash
+bash scripts/test.sh
+```
+
+> Note: You can also generate a coverage report with:
+
+```bash
+bash scripts/test_html.sh
+```
+
+### Format the code 🍂
 
 Execute the following command to apply `pre-commit` formatting:
 
 ```bash
-make lint
+bash scripts/format.sh
+```
+
+Execute the following command to apply `mypy` type checking:
+
+```bash
+bash scripts/lint.sh
 ```
 
 ## License 🍻
