@@ -67,7 +67,9 @@ def querydict_to_dict(
             continue
         field = model_fields[key]
         # Discard field if its value is empty string and we don't expect string in model
-        if orig_value in ('', b'') and not issubclass(field.outer_type_, (str, bytes, bytearray)):
+        if orig_value in ("", b"") and not issubclass(
+            field.outer_type_, (str, bytes, bytearray)
+        ):
             continue
         if _is_list_field(field):
             to_dict[key] = query_dict.getlist(key)
