@@ -61,7 +61,15 @@ def querydict_to_dict(
     model_fields = model_class.__fields__
 
     for key in query_dict.keys():
-        if key in model_fields and _is_list_field(model_fields[key]):
+        orig_value = query_dict.get(key)
+        if key not in model_fields:
+            to_dict[key] = orig_value
+            continue
+        field = model_fields[key]
+        # Discard field if its value is empty string and we don't expect string in model
+        if orig_value in ('', b'') and not issubclass(field.outer_type_, (str, bytes, bytearray)):
+            continue
+        if _is_list_field(field):
             to_dict[key] = query_dict.getlist(key)
         else:
             to_dict[key] = query_dict.get(key)
