@@ -14,16 +14,22 @@ class Model(QueryDictModel, BaseModel):
     foo: int
     bar: List[int]
     sub_id: Optional[int]
-    key: str = 'key'
+    key: str = "key"
 
 
 @pytest.mark.parametrize(
     ("data", "expected"),
     (
-        (QueryDict("foo=12&bar=12"), Model(foo=12, bar=[12], key='key')),
-        ({"foo": 44, "bar": [0, 4]}, Model(foo=44, bar=[0, 4], key='key')),
-        (QueryDict("foo=10&bar=12&sub_id=&key="), Model(foo=10, bar=[12], sub_id=None, key='')),
-        (QueryDict("foo=10&bar=12&key=abc&extra=something"), Model(foo=10, bar=[12], key='abc')),
+        (QueryDict("foo=12&bar=12"), Model(foo=12, bar=[12], key="key")),
+        ({"foo": 44, "bar": [0, 4]}, Model(foo=44, bar=[0, 4], key="key")),
+        (
+            QueryDict("foo=10&bar=12&sub_id=&key="),
+            Model(foo=10, bar=[12], sub_id=None, key=""),
+        ),
+        (
+            QueryDict("foo=10&bar=12&key=abc&extra=something"),
+            Model(foo=10, bar=[12], key="abc"),
+        ),
     ),
 )
 def test_parsing_objects(
