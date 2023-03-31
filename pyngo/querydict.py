@@ -1,4 +1,5 @@
 import sys
+from collections import deque
 from typing import Any, Dict, Optional, Type, TypeVar
 
 from django.http import QueryDict
@@ -71,14 +72,14 @@ def querydict_to_dict(
             field.outer_type_, (str, bytes, bytearray)
         ):
             continue
-        if _is_list_field(field):
+        if _is_sequence_field(field):
             to_dict[key] = query_dict.getlist(key)
         else:
             to_dict[key] = query_dict.get(key)
     return to_dict
 
 
-def _is_list_field(field: ModelField) -> bool:
+def _is_sequence_field(field: ModelField) -> bool:
     """
     Check if a field is a list field.
 
@@ -88,4 +89,5 @@ def _is_list_field(field: ModelField) -> bool:
     Returns:
         bool: True if the field is a list field, False otherwise.
     """
-    return get_origin(field.outer_type_) == list
+    origin_type = get_origin(field.outer_type_)
+    return origin_type in (list, tuple, deque, set, frozenset)
