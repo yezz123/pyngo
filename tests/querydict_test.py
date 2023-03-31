@@ -1,9 +1,10 @@
 import os
-from typing import Any, Dict, List, Optional, Union
+from collections import deque
+from typing import Any, Deque, Dict, FrozenSet, List, Optional, Tuple, Union
 
 import pytest
 from django.http import QueryDict
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from pyngo import QueryDictModel
 
@@ -15,12 +16,20 @@ class Model(QueryDictModel, BaseModel):
     bar: List[int]
     sub_id: Optional[int]
     key: str = "key"
+    wings: Tuple[int, ...] = Field(default_factory=tuple)
+    queue: Deque[int] = Field(default_factory=deque)
+    basket: FrozenSet[int] = Field(default_factory=frozenset)
 
 
 @pytest.mark.parametrize(
     ("data", "expected"),
     (
-        (QueryDict("foo=12&bar=12"), Model(foo=12, bar=[12], key="key")),
+        (
+            QueryDict("foo=12&bar=12"),
+            Model(
+                foo=12, bar=[12], key="key", wings=(), queue=deque(), basket=frozenset()
+            ),
+        ),
         ({"foo": 44, "bar": [0, 4]}, Model(foo=44, bar=[0, 4], key="key")),
         (
             QueryDict("foo=10&bar=12&sub_id=&key="),
@@ -29,6 +38,14 @@ class Model(QueryDictModel, BaseModel):
         (
             QueryDict("foo=10&bar=12&key=abc&extra=something"),
             Model(foo=10, bar=[12], key="abc"),
+        ),
+        (
+            QueryDict("foo=8&bar=9&wings=1&wings=2&queue=3&queue=4"),
+            Model(foo=8, bar=[9], wings=(1, 2), queue=deque((3, 4))),
+        ),
+        (
+            QueryDict("foo=8&bar=9&basket=5&basket=6"),
+            Model(foo=8, bar=[9], basket=frozenset((5, 6))),
         ),
     ),
 )
@@ -41,3 +58,6 @@ def test_parsing_objects(
     assert got.bar == expected.bar
     assert got.sub_id == expected.sub_id
     assert got.key == expected.key
+    assert got.wings == expected.wings
+    assert got.queue == expected.queue
+    assert got.basket == expected.basket
