@@ -66,7 +66,7 @@ def querydict_to_dict(
 
         orig_value = query_dict.get(key)
         if field_key not in model_fields:
-            to_dict[field_key] = orig_value
+            to_dict[key] = orig_value
             continue
         field = model_fields[field_key]
         # Discard field if its value is empty string and we don't expect string in model
@@ -75,9 +75,9 @@ def querydict_to_dict(
         ):
             continue
         if _is_sequence_field(field):
-            to_dict[field_key] = query_dict.getlist(key)
+            to_dict[key] = query_dict.getlist(key)
         else:
-            to_dict[field_key] = query_dict.get(key)
+            to_dict[key] = query_dict.get(key)
     return to_dict
 
 

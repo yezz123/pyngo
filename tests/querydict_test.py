@@ -50,7 +50,9 @@ class Model(QueryDictModel, BaseModel):
         ),
         (
             QueryDict("foo=8&bar=9&basket=5&basket=6&alias[list]=5&alias[list]=3"),
-            Model(foo=8, bar=[9], basket=frozenset((5, 6)), alias_list=[5, 3]),
+            # This has to  be a dictionary due to the invalid characters in alias[list]
+            # Which has to be set because that's what the model is looking for via the Field alias
+            Model(**{'foo':8, 'bar': [9], 'basket': frozenset((5, 6)), 'alias[list]': [5, 3]}),
         ),
     ),
 )
