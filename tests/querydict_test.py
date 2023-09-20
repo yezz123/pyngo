@@ -19,6 +19,7 @@ class Model(QueryDictModel, BaseModel):
     wings: Tuple[int, ...] = Field(default_factory=tuple)
     queue: Deque[int] = Field(default_factory=deque)
     basket: FrozenSet[int] = Field(default_factory=frozenset)
+    alias_list: List[int] = Field(alias="alias[list]", default_factory=list)
 
 
 @pytest.mark.parametrize(
@@ -47,6 +48,10 @@ class Model(QueryDictModel, BaseModel):
             QueryDict("foo=8&bar=9&basket=5&basket=6"),
             Model(foo=8, bar=[9], basket=frozenset((5, 6))),
         ),
+        (
+            QueryDict("foo=8&bar=9&basket=5&basket=6&alias[list]=5&alias[list]=3"),
+            Model(foo=8, bar=[9], basket=frozenset((5, 6)), alias_list=[5, 3]),
+        ),
     ),
 )
 def test_parsing_objects(
@@ -61,3 +66,4 @@ def test_parsing_objects(
     assert got.wings == expected.wings
     assert got.queue == expected.queue
     assert got.basket == expected.basket
+    assert got.alias_list == expected.alias_list
