@@ -62,11 +62,13 @@ def querydict_to_dict(
     model_fields = model_class.__fields__
 
     for key in query_dict.keys():
+        field_key = next((x.name for x in model_fields.values() if x.alias == key), key)
+
         orig_value = query_dict.get(key)
-        if key not in model_fields:
+        if field_key not in model_fields:
             to_dict[key] = orig_value
             continue
-        field = model_fields[key]
+        field = model_fields[field_key]
         # Discard field if its value is empty string and we don't expect string in model
         if orig_value in ("", b"") and not issubclass(
             field.outer_type_, (str, bytes, bytearray)
