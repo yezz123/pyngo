@@ -58,11 +58,10 @@ test = [
 [tool.hatch.version]
 path = "pyngo/__init__.py"
 
-[tool.isort]
-profile = "black"
-known_third_party = ["pydantic", "typing_extensions"]
 
 [tool.ruff]
+line-length = 120
+mccabe = { max-complexity = 14 }
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
@@ -82,6 +81,9 @@ ignore = [
 
 [tool.ruff.isort]
 known-third-party = ["pydantic", "typing_extensions"]
+
+[tool.ruff.pyupgrade]
+keep-runtime-typing = true
 
 [tool.mypy]
 plugins = "pydantic.mypy"
