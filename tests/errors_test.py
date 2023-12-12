@@ -42,16 +42,10 @@ class TestToDRFError:
         try:
             MyModel.parse_obj({"int_field": 42, "nested_field": {"str_field": "foo"}})
         except ValidationError as e:
-            assert drf_error_details(e) == {
-                "nested_field": {"str_field": ["Name must be: 'bar'!"]}
-            }
+            assert drf_error_details(e) == {"nested_field": {"str_field": ["Name must be: 'bar'!"]}}
 
     def test_with_nested_list(self) -> None:
         try:
-            MyModel.parse_obj(
-                {"nested_list": [{"str_field": "bar"}, {"str_field": "foo"}]}
-            )
+            MyModel.parse_obj({"nested_list": [{"str_field": "bar"}, {"str_field": "foo"}]})
         except ValidationError as e:
-            assert drf_error_details(e) == {
-                "nested_list": {"1": {"str_field": ["Name must be: 'bar'!"]}}
-            }
+            assert drf_error_details(e) == {"nested_list": {"1": {"str_field": ["Name must be: 'bar'!"]}}}

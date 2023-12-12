@@ -27,9 +27,7 @@ class Model(QueryDictModel, BaseModel):
     (
         (
             QueryDict("foo=12&bar=12"),
-            Model(
-                foo=12, bar=[12], key="key", wings=(), queue=deque(), basket=frozenset()
-            ),
+            Model(foo=12, bar=[12], key="key", wings=(), queue=deque(), basket=frozenset()),
         ),
         ({"foo": 44, "bar": [0, 4]}, Model(foo=44, bar=[0, 4], key="key")),
         (
@@ -63,9 +61,7 @@ class Model(QueryDictModel, BaseModel):
         ),
     ),
 )
-def test_parsing_objects(
-    data: Union[QueryDict, Dict[str, Any]], expected: Model
-) -> None:
+def test_parsing_objects(data: Union[QueryDict, Dict[str, Any]], expected: Model) -> None:
     got = Model.parse_obj(data)
     assert got == expected
     assert got.foo == expected.foo
