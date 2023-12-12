@@ -41,7 +41,7 @@ Successfully installed pyngo
 - Using `OpenAPI` utilities to build params from a basic model.
 - using `QueryDictModel` to build `Pydantic` models from a `QueryDict` object.
 - propagate any errors from Pydantic in Django Rest Framework.
-- Tested in Python 3.6 and up.
+- Tested in Python 3.8 and up.
 
 ## Examples 📚
 
