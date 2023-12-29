@@ -14,7 +14,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
 class Model(QueryDictModel, BaseModel):
     foo: int
     bar: List[int]
-    sub_id: Optional[int]
+    sub_id: Optional[int] = None
     key: str = "key"
     wings: Tuple[int, ...] = Field(default_factory=tuple)
     queue: Deque[int] = Field(default_factory=deque)
@@ -62,7 +62,7 @@ class Model(QueryDictModel, BaseModel):
     ),
 )
 def test_parsing_objects(data: Union[QueryDict, Dict[str, Any]], expected: Model) -> None:
-    got = Model.parse_obj(data)
+    got = Model.model_validate(data)
     assert got == expected
     assert got.foo == expected.foo
     assert got.bar == expected.bar

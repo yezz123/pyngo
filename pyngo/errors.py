@@ -15,17 +15,17 @@ def drf_error_details(exception: ValidationError) -> Dict[str, Any]:
     """
     drf_data: Dict[str, Any] = {}
     for error in exception.errors():
-        set_nested(drf_data, error["loc"], [error["msg"]])  # type: ignore
+        set_nested(drf_data, error["loc"], [error["msg"]])
     return drf_data
 
 
-def set_nested(data: Dict[str, Any], keys: Sequence[str], value: Any) -> None:
+def set_nested(data: Dict[str, Any], keys: tuple[int | str, ...], value: Any) -> None:
     """
     Set a value in a nested dictionary.
 
     Args:
         data (Dict[str, Any]): The dictionary to set the value in.
-        keys (Sequence[str]): The keys to set the value at.
+        keys (tuple[int | str, ...]): The keys to set the value at.
         value (Any): The value to set.
 
     Returns:
@@ -33,7 +33,7 @@ def set_nested(data: Dict[str, Any], keys: Sequence[str], value: Any) -> None:
     """
     for key in keys[:-1]:
         data = data.setdefault(str(key), {})
-    data[keys[-1]] = value
+    data[str(keys[-1])] = value
 
 
 def get_nested(data: Dict[str, Any], keys: Sequence[str]) -> Any:

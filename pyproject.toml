@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "pyngo"
 description = "Pydantic Package for Adding Models into a Django or Django Rest Framework Project ✨"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = "MIT"
 authors = [
     { name = "Yasser Tahiri", email = "hello@yezz.me" },
@@ -20,8 +20,6 @@ classifiers = [
     "Natural Language :: English",
     "Framework :: Django",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -32,7 +30,7 @@ classifiers = [
 
 dependencies = [
     "typing-extensions >=3.7.4,<4.10.0",
-    "pydantic >=1.8.2,<2.0.0",
+    "pydantic>=2.5.3",
     "Django >=3.2.0,<6.0.0",
 ]
 
@@ -46,6 +44,7 @@ Funding = 'https://github.com/sponsors/yezz123'
 lint = [
     "pre-commit==3.6.0",
     "mypy==1.8.0",
+    "ruff==0.1.9",
 ]
 test = [
     "pytest==7.4.3",

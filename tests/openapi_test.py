@@ -17,7 +17,7 @@ class TestPydanticModelToOpenapiParameters:
 
     def test_prohibits_unknown_location(self) -> None:
         class Model(BaseModel):
-            path_param: int = Field(location="foo")
+            path_param: int = Field(json_schema_extra={"location": "foo"})
 
         with pytest.raises(ValueError) as exc:
             openapi_params(Model)
@@ -25,7 +25,7 @@ class TestPydanticModelToOpenapiParameters:
 
     def test_prohibits_optional_path_params(self) -> None:
         class Model(BaseModel):
-            path_param: Optional[int] = Field(location="path")
+            path_param: Optional[int] = Field(default=0, json_schema_extra={"location": "path"})
 
         with pytest.raises(ValueError) as exc:
             openapi_params(Model)
@@ -33,7 +33,7 @@ class TestPydanticModelToOpenapiParameters:
 
     def test_defaults_path_params_to_be_required(self) -> None:
         class Model(BaseModel):
-            path_param: int = Field(location="path")
+            path_param: int = Field(json_schema_extra={"location": "path"})
 
         params = openapi_params(Model)
         assert len(params) == 1
@@ -42,7 +42,7 @@ class TestPydanticModelToOpenapiParameters:
     @pytest.mark.parametrize("param_loc", ("header", "path", "cookie"))
     def test_prohibits_allow_empty_outside_of_query(self, param_loc: str) -> None:
         class Model(BaseModel):
-            param: int = Field(location=param_loc, allowEmptyValue=True)
+            param: int = Field(json_schema_extra={"location": param_loc, "allowEmptyValue": True})
 
         with pytest.raises(ValueError) as exc:
             openapi_params(Model)
@@ -50,7 +50,7 @@ class TestPydanticModelToOpenapiParameters:
 
     def test_allow_empty_excluded_for_non_query_params(self) -> None:
         class Model(BaseModel):
-            param: int = Field(location="header")
+            param: int = Field(json_schema_extra={"location": "header"})
 
         params = openapi_params(Model)
         assert len(params) == 1
@@ -74,7 +74,7 @@ class TestPydanticModelToOpenapiParameters:
 
     def test_optional_fields_are_not_required(self) -> None:
         class Model(BaseModel):
-            param: Optional[int] = Field()
+            param: Optional[int] = Field(default=0)
 
         params = openapi_params(Model)
         assert len(params) == 1
@@ -83,11 +83,12 @@ class TestPydanticModelToOpenapiParameters:
     def test_reading_query_params(self) -> None:
         class PathParams(BaseModel):
             document_id: int = Field(
-                location="query",
                 description="The document id",
-                required=True,
-                deprecated=True,
-                allowEmptyValue=True,
+                json_schema_extra={
+                    "location": "query",
+                    "deprecated": True,
+                    "allowEmptyValue": True,
+                },
             )
 
         expected_parameters = [
