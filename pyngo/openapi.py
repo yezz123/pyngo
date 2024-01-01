@@ -1,8 +1,8 @@
-from typing import List, Type, cast
+import types
+from typing import List, Literal, Optional, Type, TypedDict, Union, cast, get_args, get_origin
 
 from pydantic import BaseModel
-from pydantic.fields import ModelField
-from typing_extensions import Literal, TypedDict
+from pydantic.fields import FieldInfo
 
 _In = Literal["query", "header", "path", "cookie"]
 
@@ -20,6 +20,31 @@ ParameterDict = TypedDict(
 )
 
 _VALID_LOCATIONS = ("query", "header", "path", "cookie")
+
+
+def is_simple_type(field: FieldInfo) -> bool:
+    """
+    Returns True if the given field has simple type.
+
+    Args:
+        field (FieldInfo): The field to check.
+
+    Returns:
+        bool: True if the given field has simple type.
+    """
+    args = get_args(field.annotation)
+    if args == ():
+        return True
+    origin = get_origin(field.annotation)
+    if origin == Optional or origin == Union:
+        match args:
+            case (klass, types.NoneType) if get_args(klass) == ():
+                return True
+            case (types.NoneType, klass) if get_args(klass) == ():
+                return True
+            case _:
+                return False
+    return False
 
 
 def openapi_params(
@@ -42,21 +67,20 @@ def openapi_params(
     """
     parameters: List[ParameterDict] = []
 
-    for field in model_class.__fields__.values():
-        if field.is_complex():
+    for name, field in model_class.model_fields.items():
+        if not is_simple_type(field):
             raise ValueError("Only simple types allowed")
-        else:
-            parameters.append(_pydantic_field_to_parameter(field))
+        parameters.append(_pydantic_field_to_parameter(name, field))
 
     return parameters
 
 
-def _pydantic_field_to_parameter(field: ModelField) -> ParameterDict:
+def _pydantic_field_to_parameter(name: str, field: FieldInfo) -> ParameterDict:
     """
     Converts a pydantic field to an OpenAPI parameter.
 
     Args:
-        field (ModelField): The field to convert.
+        field (FieldInfo): The field to convert.
 
     Raises:
         ValueError: If the field has an invalid location.
@@ -66,21 +90,21 @@ def _pydantic_field_to_parameter(field: ModelField) -> ParameterDict:
     Returns:
         ParameterDict: The converted field.
     """
-    location = field.field_info.extra.get("location", "query")
+    field_extra = (field.json_schema_extra if not callable(field.json_schema_extra) else None) or {}
+    location = field_extra.get("location", "query")
     if location not in _VALID_LOCATIONS:
         raise ValueError(f"location must be one of: {', '.join(_VALID_LOCATIONS)}")
 
-    required = field.required
+    required = field.is_required()
     if location == "path" and not required:
         raise ValueError("Path parameters must be required")
 
-    field_extra = field.field_info.extra
     deprecated = field_extra.get("deprecated", False)
 
     args = {
-        "name": field.name,
+        "name": name,
         "in": location,
-        "description": field.field_info.description or "",
+        "description": field.description or "",
         "required": required,
         "deprecated": deprecated,
     }
