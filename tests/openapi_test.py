@@ -60,25 +60,24 @@ class TestPydanticModelToOpenapiParameters:
         class Model(BaseModel):
             param: int = Field()
 
-        params = openapi_params(Model)
-        assert len(params) == 1
-        assert not params[0]["allowEmptyValue"]
+        self.openapi_param(Model, "allowEmptyValue")
 
     def test_deprecated_defaults_to_false(self) -> None:
         class Model(BaseModel):
             param: int = Field()
 
-        params = openapi_params(Model)
-        assert len(params) == 1
-        assert not params[0]["deprecated"]
+        self.openapi_param(Model, "deprecated")
 
     def test_optional_fields_are_not_required(self) -> None:
         class Model(BaseModel):
             param: Optional[int] = Field(default=0)
 
+        self.openapi_param(Model, "required")
+
+    def openapi_param(self, Model, arg):
         params = openapi_params(Model)
         assert len(params) == 1
-        assert not params[0]["required"]
+        assert not params[0][arg]
 
     def test_reading_query_params(self) -> None:
         class PathParams(BaseModel):
