@@ -36,7 +36,7 @@ def is_simple_type(field: FieldInfo) -> bool:
     if args == ():
         return True
     origin = get_origin(field.annotation)
-    if origin == Optional or origin == Union:
+    if origin in [Optional, Union]:
         match args:
             case (klass, types.NoneType) if get_args(klass) == ():
                 return True
@@ -90,7 +90,7 @@ def _pydantic_field_to_parameter(name: str, field: FieldInfo) -> ParameterDict:
     Returns:
         ParameterDict: The converted field.
     """
-    field_extra = (field.json_schema_extra if not callable(field.json_schema_extra) else None) or {}
+    field_extra = (None if callable(field.json_schema_extra) else field.json_schema_extra) or {}
     location = field_extra.get("location", "query")
     if location not in _VALID_LOCATIONS:
         raise ValueError(f"location must be one of: {', '.join(_VALID_LOCATIONS)}")
