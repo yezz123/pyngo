@@ -4,6 +4,7 @@ import pytest
 from pydantic import BaseModel, ValidationError, field_validator
 
 from pyngo import drf_error_details
+from pyngo.errors import get_nested
 
 
 class NestedModel(BaseModel):
@@ -50,3 +51,43 @@ class TestToDRFError:
             MyModel.model_validate({"nested_list": [{"str_field": "bar"}, {"str_field": "foo"}]})
         except ValidationError as e:
             assert drf_error_details(e) == {"nested_list": {"1": {"str_field": ["Value error, Name must be: 'bar'!"]}}}
+
+
+class TestGetNested:
+    def test_get_nested_with_valid_data(self):
+        result = self.data("bar")
+        # Assert the result
+        assert result == "bar"
+
+    def test_get_nested_with_invalid_data(self):
+        result = self.data("not_bar")
+        with pytest.raises(ValueError, match="Name must be: 'bar'!"):
+            NestedModel(str_field=result).model_dump()
+
+    def data(self, arg):
+        nested_data = {"first": {"second": {"third": {"str_field": arg}}}}
+        keys = ["first", "second", "third", "str_field"]
+        return get_nested(nested_data, keys)
+
+    def test_must_be_bar_validator_with_valid_value(self):
+        # Create a valid NestedModel instance
+        valid_model = NestedModel(str_field="bar")
+
+        # Assert that validation does not raise an error
+        valid_model.model_dump()
+
+    def test_must_be_bar_validator_with_invalid_value(self):
+        # Create an invalid NestedModel instance
+        with pytest.raises(ValidationError, match="Name must be: 'bar'!"):
+            NestedModel(str_field="not_bar")
+
+
+class TestMyModel:
+    def test_must_be_special_value_validator_with_invalid_value(self):
+        with pytest.raises(ValidationError, match="Must be the magic number!"):
+            MyModel(int_field=10)
+
+    def test_valid_model_creation(self):
+        valid_model = MyModel(int_field=42, nested_field=NestedModel(str_field="bar"))
+        assert valid_model.int_field == 42
+        assert valid_model.nested_field.str_field == "bar"
