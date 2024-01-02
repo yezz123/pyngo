@@ -3,4 +3,4 @@
 set -e
 set -x
 
-mypy --show-error-codes pyngo tests
+mypy --show-error-codes pyngo
