@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/yezz123/pyngo/actions/workflows/test.yml" target="_blank">
-    <img src="https://github.com/yezz123/pyngo/actions/workflows/test.yml/badge.svg" alt="Test">
+<a href="https://github.com/yezz123/pyngo/actions/workflows/ci.yml" target="_blank">
+    <img src="https://github.com/yezz123/pyngo/actions/workflows/ci.yml/badge.svg" alt="Test">
 </a>
 <a href="https://codecov.io/gh/yezz123/pyngo">
     <img src="https://codecov.io/gh/yezz123/pyngo/branch/main/graph/badge.svg"/>
@@ -41,7 +41,7 @@ Successfully installed pyngo
 - Using `OpenAPI` utilities to build params from a basic model.
 - using `QueryDictModel` to build `Pydantic` models from a `QueryDict` object.
 - propagate any errors from Pydantic in Django Rest Framework.
-- Tested in Python 3.8 and up.
+- Tested in Python 3.10 and up.
 
 ## Examples 📚
 
