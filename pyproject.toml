@@ -11,6 +11,13 @@ license = "MIT"
 authors = [
     { name = "Yasser Tahiri", email = "hello@yezz.me" },
 ]
+keywords = [
+    "django",
+    "django-rest-framework",
+    "pydantic",
+    "pydantic-models",
+    "pydantic-django",
+]
 
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -83,6 +90,17 @@ known-third-party = ["pydantic", "typing_extensions"]
 
 [tool.ruff.pyupgrade]
 keep-runtime-typing = true
+
+[tool.coverage.run]
+source = ["pyngo", "tests"]
+branch = true
+context = '${CONTEXT}'
+
+[tool.coverage.paths]
+source = [
+    "pyngo",
+    "tests",
+]
 
 [tool.mypy]
 plugins = "pydantic.mypy"
