@@ -23,7 +23,7 @@ jobs:
       - name: check GITHUB_REF matches package version
         uses: samuelcolvin/check-python-version@v4.1
         with:
-          version_file_path: ormdantic/__init__.py
+          version_file_path: pyngo/__init__.py
       - name: Build distribution
         run: python -m build
       - name: Publish
