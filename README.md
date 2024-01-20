@@ -119,8 +119,8 @@ class QueryModel(QueryDictModel):
 
 query_dict = QueryDict("single_param=20&list_param=Life")
 
-print(Model.parse_obj(querydict_to_dict(query_dict, Model)))
-print(QueryModel.parse_obj(query_dict))
+print(Model.model_validate(querydict_to_dict(query_dict, Model)))
+print(QueryModel.model_validate(query_dict))
 ```
 
 > **Note:** Don't forget to Setup the Django Project.
@@ -167,7 +167,7 @@ expected_details = {
 }
 
 try:
-   Language.parse_obj(data)
+   Language.model_validate(data)
 except ValidationError as e:
    print(drf_error_details(e))
 ```
