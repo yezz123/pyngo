@@ -158,7 +158,7 @@ class Framework(BaseModel):
 class Language(BaseModel):
    framework: List[Framework]
 
-data = {"Framework": [{"frm_id": "not_a_number"}, {}]}
+data = {"framework": [{"frm_id": "not_a_number"}, {}]}
 expected_details = {
    "framework": {
       "0": {"frm_id": ["value is not a valid integer"]},
@@ -167,7 +167,7 @@ expected_details = {
 }
 
 try:
-   Framework.parse_obj(data)
+   Language.parse_obj(data)
 except ValidationError as e:
    print(drf_error_details(e))
 ```
