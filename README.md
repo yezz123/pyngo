@@ -17,6 +17,9 @@
 <a href="https://pypi.org/project/pyngo" target="_blank">
     <img src="https://img.shields.io/pypi/pyversions/pyngo.svg?color=%2334D058" alt="Supported Python versions">
 </a>
+<a href="https://pepy.tech/project/pyngo" target="_blank">
+    <img src="https://static.pepy.tech/badge/pyngo" alt="Test">
+</a>
 </p>
 
 ---
