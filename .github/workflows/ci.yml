@@ -63,7 +63,7 @@ jobs:
       - name: Upload coverage
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
 
   # https://github.com/marketplace/actions/alls-green#why used for branch protection checks
   check:
