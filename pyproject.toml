@@ -51,7 +51,7 @@ Funding = 'https://github.com/sponsors/yezz123'
 lint = [
     "pre-commit==3.7.1",
     "mypy==1.10.0",
-    "ruff==0.4.5",
+    "ruff==0.4.7",
 ]
 test = [
     "pytest==8.2.1",
