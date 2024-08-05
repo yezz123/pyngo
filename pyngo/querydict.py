@@ -1,8 +1,8 @@
 import logging
 import warnings
 from collections import deque
-from types import UnionType, NoneType
-from typing import Any, Dict, Type, TypeVar, get_origin, get_args
+from types import NoneType, UnionType
+from typing import Any, Dict, Type, TypeVar, get_args, get_origin
 
 import typing_extensions
 from django.http import QueryDict
