@@ -1,17 +1,18 @@
 import os
 from collections import deque
-from typing import Any, Deque, Dict, FrozenSet, List, Optional, Tuple, Union
+from typing import Any, Deque, Dict, FrozenSet, List, Optional, Tuple, Union, Annotated
 
 import pytest
 from django.http import QueryDict
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 from pyngo import QueryDictModel
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
 
 
-class Model(QueryDictModel, BaseModel):
+class Model(QueryDictModel):
+    model_config = ConfigDict(populate_by_name=True)
     foo: int
     bar: List[int]
     sub_id: Optional[int] = None
@@ -20,6 +21,7 @@ class Model(QueryDictModel, BaseModel):
     queue: Deque[int] = Field(default_factory=deque)
     basket: FrozenSet[int] = Field(default_factory=frozenset)
     alias_list: List[int] = Field(alias="alias[list]", default_factory=list)
+    nodes: Annotated[list[int] | None, Field(validation_alias='node')] = None
 
 
 @pytest.mark.parametrize(
@@ -59,6 +61,10 @@ class Model(QueryDictModel, BaseModel):
                 }
             ),
         ),
+        (
+            QueryDict("foo=1&bar=2&node=9&node=10"),
+            Model(foo=1, bar=[2], nodes=[9, 10]),
+        )
     ),
 )
 def test_parsing_objects(data: Union[QueryDict, Dict[str, Any]], expected: Model) -> None:
