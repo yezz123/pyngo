@@ -22,6 +22,7 @@ class Model(QueryDictModel):
     basket: FrozenSet[int] = Field(default_factory=frozenset)
     alias_list: List[int] = Field(alias="alias[list]", default_factory=list)
     nodes: Annotated[list[int] | None, Field(validation_alias="node")] = None
+    author: int | str = 0
 
 
 @pytest.mark.parametrize(
@@ -29,9 +30,9 @@ class Model(QueryDictModel):
     (
         (
             QueryDict("foo=12&bar=12"),
-            Model(foo=12, bar=[12], key="key", wings=(), queue=deque(), basket=frozenset()),
+            Model(foo=12, bar=[12], key="key", wings=(), queue=deque(), basket=frozenset(), author=0),
         ),
-        ({"foo": 44, "bar": [0, 4]}, Model(foo=44, bar=[0, 4], key="key")),
+        ({"foo": 44, "bar": [0, 4], "author": 5}, Model(foo=44, bar=[0, 4], key="key", author=5)),
         (
             QueryDict("foo=10&bar=12&sub_id=&key="),
             Model(foo=10, bar=[12], sub_id=None, key=""),
@@ -52,18 +53,20 @@ class Model(QueryDictModel):
             QueryDict("foo=8&bar=9&basket=5&basket=6&alias[list]=5&alias[list]=3"),
             # This has to  be a dictionary due to the invalid characters in alias[list]
             # Which has to be set because that's what the model is looking for via the Field alias
-            Model(
-                **{
-                    "foo": 8,
-                    "bar": [9],
-                    "basket": frozenset((5, 6)),
-                    "alias[list]": [5, 3],
-                }
-            ),
+            Model(**{
+                "foo": 8,
+                "bar": [9],
+                "basket": frozenset((5, 6)),
+                "alias[list]": [5, 3],
+            }),
         ),
         (
             QueryDict("foo=1&bar=2&node=9&node=10"),
             Model(foo=1, bar=[2], nodes=[9, 10]),
+        ),
+        (
+            QueryDict("foo=1&bar=2&author=user@example.com"),
+            Model(foo=1, bar=[2], author="user@example.com"),
         ),
     ),
 )
