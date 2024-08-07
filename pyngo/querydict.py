@@ -1,6 +1,7 @@
 import warnings
 from collections import deque
-from typing import Any, Dict, Type, TypeVar, get_origin
+from types import NoneType, UnionType
+from typing import Any, Dict, Type, TypeVar, get_args, get_origin
 
 import typing_extensions
 from django.http import QueryDict
@@ -71,7 +72,9 @@ def querydict_to_dict(
 
     for key, orig_value in query_dict.items():
         # Get field name (as defined in Pydantic model, not necessary the key in data dict, because of aliasing)
-        field_key = next((name for (name, inf) in model_fields.items() if inf.alias == key), key)
+        field_key = next(
+            (name for (name, inf) in model_fields.items() if inf.alias == key or inf.validation_alias == key), key
+        )
 
         if field_key not in model_fields:
             to_dict[key] = orig_value
@@ -107,7 +110,7 @@ def _is_string_like_field(field: FieldInfo) -> bool:
 
 def _is_sequence_field(field: FieldInfo) -> bool:
     """
-    Check if a field is a list field.
+    Check if a field is a sequence field.
 
     Args:
         field (FieldInfo): The field to check.
@@ -115,5 +118,15 @@ def _is_sequence_field(field: FieldInfo) -> bool:
     Returns:
         bool: True if the field is a list field, False otherwise.
     """
+    SEQUENCE_TYPES = (list, tuple, deque, set, frozenset)
     origin_type = get_origin(field.annotation)
-    return origin_type in (list, tuple, deque, set, frozenset)
+    if origin_type in SEQUENCE_TYPES:
+        return True
+    # Hanlde the case of list[int] | None
+    if origin_type is UnionType:
+        union_arg_types = get_args(field.annotation)
+        first_member_type, second_member_type = union_arg_types[:2]
+        return (second_member_type is NoneType and get_origin(first_member_type) in SEQUENCE_TYPES) or (
+            first_member_type is NoneType and get_origin(second_member_type) in SEQUENCE_TYPES
+        )
+    return False
