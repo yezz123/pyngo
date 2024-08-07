@@ -1,4 +1,3 @@
-import logging
 import warnings
 from collections import deque
 from types import NoneType, UnionType
@@ -11,7 +10,6 @@ from pydantic.fields import FieldInfo
 from pydantic.warnings import PydanticDeprecatedSince20
 
 _QueryDictModel = TypeVar("_QueryDictModel", bound="QueryDictModel")
-logger = logging.getLogger(__name__)
 
 
 class QueryDictModel(BaseModel):
@@ -127,11 +125,8 @@ def _is_sequence_field(field: FieldInfo) -> bool:
     # Hanlde the case of list[int] | None
     if origin_type is UnionType:
         union_arg_types = get_args(field.annotation)
-        try:
-            first_member_type, second_member_type = union_arg_types[:2]
-            return (second_member_type is NoneType and get_origin(first_member_type) in SEQUENCE_TYPES) or (
-                first_member_type is NoneType and get_origin(second_member_type) in SEQUENCE_TYPES
-            )
-        except ValueError as e:
-            logger.warning('Error when unpacking union type for "%s" field: %s', field, e)
+        first_member_type, second_member_type = union_arg_types[:2]
+        return (second_member_type is NoneType and get_origin(first_member_type) in SEQUENCE_TYPES) or (
+            first_member_type is NoneType and get_origin(second_member_type) in SEQUENCE_TYPES
+        )
     return False
