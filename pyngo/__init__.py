@@ -1,6 +1,6 @@
 """Pydantic Package for Adding Models into a Django or Django Rest Framework Project"""
 
-__version__ = "2.2.0"
+__version__ = "2.2.1"
 
 from .errors import drf_error_details
 from .openapi import ParameterDict, openapi_params
