@@ -143,7 +143,7 @@ class Model(BaseModel):
 data = {"foo": "Cat"}
 
 try:
-   Model.parse_obj(data)
+   Model.model_validate(data)
 except ValidationError as e:
    print(drf_error_details(e))
 ```
