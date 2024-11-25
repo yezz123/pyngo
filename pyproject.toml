@@ -37,7 +37,7 @@ classifiers = [
 
 dependencies = [
     "typing-extensions >=3.7.4,<4.13.0",
-    "pydantic>=2.8.2,<2.10.0",
+    "pydantic>=2.8.2,<2.11.0",
     "Django >=3.2.0,<6.0.0",
 ]
 
@@ -51,7 +51,7 @@ Funding = 'https://github.com/sponsors/yezz123'
 lint = [
     "pre-commit==4.0.1",
     "mypy==1.12.1",
-    "ruff==0.7.0",
+    "ruff==0.8.0",
 ]
 test = [
     "pytest==8.3.3",
@@ -140,6 +140,7 @@ log_cli_date_format= "%Y-%m-%d %H:%M:%S"
 asyncio_mode= "auto"
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
 filterwarnings = [
     "ignore:The default value of USE_TZ",
 ]
