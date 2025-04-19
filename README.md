@@ -179,21 +179,13 @@ except ValidationError as e:
 
 ### Setup environment 📦
 
-You should create a virtual environment and activate it:
-
-```bash
-python -m venv venv/
-```
-
-```bash
-source venv/bin/activate
-```
+Install `uv` from https://docs.astral.sh/uv/ and `just` from your OS package manager or https://just.systems.
 
 And then install the development dependencies:
 
 ```bash
-# Install dependencies
-pip install -e .[test,lint]
+# Install dependencies for development
+uv sync --all-groups
 ```
 
 ### Run tests 🌝
@@ -201,13 +193,13 @@ pip install -e .[test,lint]
 You can run all the tests with:
 
 ```bash
-bash scripts/test.sh
+just test
 ```
 
 > Note: You can also generate a coverage report with:
 
 ```bash
-bash scripts/test_html.sh
+just test-html
 ```
 
 ### Format the code 🍂
@@ -215,13 +207,13 @@ bash scripts/test_html.sh
 Execute the following command to apply `pre-commit` formatting:
 
 ```bash
-bash scripts/format.sh
+just format
 ```
 
 Execute the following command to apply `mypy` type checking:
 
 ```bash
-bash scripts/lint.sh
+just lint
 ```
 
 ## License 🍻

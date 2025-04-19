@@ -37,8 +37,8 @@ classifiers = [
 ]
 
 dependencies = [
-    "typing-extensions >=3.7.4,<4.13.0",
-    "pydantic>=2.8.2,<2.11.0",
+    "typing-extensions >=3.7.4,<4.14.0",
+    "pydantic>=2.8.2,<2.12.0",
     "Django >=3.2.0,<6.0.0",
 ]
 
@@ -48,16 +48,16 @@ dynamic = ["version"]
 Homepage = "https://github.com/yezz123/pyngo"
 Funding = 'https://github.com/sponsors/yezz123'
 
-[project.optional-dependencies]
+[dependency-groups]
 lint = [
-    "pre-commit==4.1.0",
+    "pre-commit==4.2.0",
     "mypy==1.15.0",
-    "ruff==0.9.10",
+    "ruff==0.11.6",
 ]
 test = [
     "pytest==8.3.5",
-    "pytest-cov==6.0.0",
-    "pytest-asyncio == 0.25.3",
+    "pytest-cov==6.1.1",
+    "pytest-asyncio == 0.26.0",
     "pytest-pretty",
     "django-stubs",
 ]
@@ -132,15 +132,13 @@ exclude_lines = [
     "if __name__ == .__main__.:",
 ]
 
-[tool.pytest]
+[tool.pytest.ini_options]
 testpaths = "tests/"
-log_cli = "1"
+log_cli = true
 log_cli_level = "INFO"
 log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
 log_cli_date_format= "%Y-%m-%d %H:%M:%S"
 asyncio_mode= "auto"
-
-[tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
 filterwarnings = [
     "ignore:The default value of USE_TZ",
