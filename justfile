@@ -43,4 +43,4 @@ test-html:
     @echo "ENV={{ENV}}"
     export PYTHONPATH=.
     uv run pytest --cov=pyngo --cov=tests --cov-report=html
-    
+

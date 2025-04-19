@@ -60,7 +60,7 @@ jobs:
 
       - name: Install Dependencies
         run: uv sync --group test
-        
+
       - name: Install Just
         uses: taiki-e/install-action@just
 
