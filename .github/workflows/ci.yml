@@ -20,13 +20,17 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - name: Install Dependencies
-        run: pip install -e .[lint]
+        run: uv sync --group lint
+      - name: Install Just
+        run: sudo apt-get install just
       - uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files --verbose
       - name: check Static Analysis
-        run: bash scripts/lint.sh
+        run: just lint
 
   tests:
 
@@ -51,14 +55,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Dependencies
-        run: pip install -e .[test]
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
-      - name: Freeze Dependencies
-        run: pip freeze
+      - name: Install Dependencies
+        run: uv sync --group test
+
+      - name: Install Just
+        uses: taiki-e/install-action@just
 
       - name: Test with pytest
-        run: bash scripts/test.sh
+        run: uv run pytest --cov=pyngo --cov=tests --cov-report=term-missing --cov-fail-under=80
 
       - name: Upload coverage
         env:

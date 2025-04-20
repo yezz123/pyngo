@@ -30,7 +30,9 @@ class QueryDictModel(BaseModel):
         *,
         strict: bool | None = None,
         from_attributes: bool | None = None,
-        context: dict[str, Any] | None = None,
+        context: Any | None = None,
+        by_alias: bool | None = None,
+        by_name: bool | None = None,
     ) -> "_QueryDictModel":
         """
         Parse a QueryDict into a model.
