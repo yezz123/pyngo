@@ -65,7 +65,7 @@ jobs:
         uses: taiki-e/install-action@just
 
       - name: Test with pytest
-        run: uv run pytest --cov=pyngo --cov=tests --cov-report=term-missing --cov-fail-under=80
+        run: uv run pytest --cov --cov-branch --cov-report=xml
 
       - name: Upload coverage
         env:
