@@ -50,13 +50,13 @@ Funding = 'https://github.com/sponsors/yezz123'
 
 [dependency-groups]
 lint = [
-    "pre-commit==4.2.0",
+    "pre-commit==4.3.0",
     "mypy==1.17.1",
-    "ruff==0.12.7",
+    "ruff==0.12.12",
 ]
 test = [
-    "pytest==8.4.1",
-    "pytest-cov==6.2.1",
+    "pytest==8.4.2",
+    "pytest-cov==6.3.0",
     "pytest-asyncio == 1.1.0",
     "pytest-pretty",
     "django-stubs",
