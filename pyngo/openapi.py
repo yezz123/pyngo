@@ -1,5 +1,5 @@
 import types
-from typing import List, Literal, Optional, Type, TypedDict, Union, cast, get_args, get_origin
+from typing import Literal, Optional, Type, TypedDict, Union, cast, get_args, get_origin
 
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
@@ -49,7 +49,7 @@ def is_simple_type(field: FieldInfo) -> bool:
 
 def openapi_params(
     model_class: Type[BaseModel],
-) -> List[ParameterDict]:
+) -> list[ParameterDict]:
     """
     Returns a list of parameters for the given model class.
 
@@ -63,9 +63,9 @@ def openapi_params(
         ValueError: If the model class has a field with required set to False for a path parameter.
 
     Returns:
-        List[ParameterDict]: A list of parameters for the given model class.
+        list[ParameterDict]: A list of parameters for the given model class.
     """
-    parameters: List[ParameterDict] = []
+    parameters: list[ParameterDict] = []
 
     for name, field in model_class.model_fields.items():
         if not is_simple_type(field):
