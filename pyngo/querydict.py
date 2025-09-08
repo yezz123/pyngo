@@ -1,15 +1,11 @@
-import warnings
 from collections import deque
 from types import NoneType, UnionType
-from typing import Any, Dict, Type, TypeVar, get_args, get_origin
+from typing import Any, Type, get_args, get_origin
 
-import typing_extensions
 from django.http import QueryDict
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
-from pydantic.warnings import PydanticDeprecatedSince20
-
-_QueryDictModel = TypeVar("_QueryDictModel", bound="QueryDictModel")
+from typing_extensions import Self
 
 
 class QueryDictModel(BaseModel):
@@ -25,7 +21,7 @@ class QueryDictModel(BaseModel):
 
     @classmethod
     def model_validate(
-        cls: type[_QueryDictModel],
+        cls,
         obj: Any,
         *,
         strict: bool | None = None,
@@ -33,7 +29,7 @@ class QueryDictModel(BaseModel):
         context: Any | None = None,
         by_alias: bool | None = None,
         by_name: bool | None = None,
-    ) -> "_QueryDictModel":
+    ) -> Self:
         """
         Parse a QueryDict into a model.
 
@@ -44,21 +40,11 @@ class QueryDictModel(BaseModel):
             obj = querydict_to_dict(obj, cls)
         return super().model_validate(obj, strict=strict, from_attributes=from_attributes, context=context)
 
-    @classmethod
-    @typing_extensions.deprecated(
-        "The `parse_obj` method is deprecated; use `model_validate` instead.", category=PydanticDeprecatedSince20
-    )
-    def parse_obj(cls: type["_QueryDictModel"], obj: Any) -> "_QueryDictModel":  # noqa: D102
-        warnings.warn(
-            "The `parse_obj` method is deprecated; use `model_validate` instead.", DeprecationWarning, stacklevel=2
-        )
-        return cls.model_validate(obj)
-
 
 def querydict_to_dict(
     query_dict: QueryDict,
     model_class: Type[BaseModel],
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Convert a QueryDict into a dictionary.
 
@@ -69,7 +55,7 @@ def querydict_to_dict(
     Returns:
         Dict[str, Any]: The converted dictionary.
     """
-    to_dict: Dict[str, Any] = {}
+    to_dict: dict[str, Any] = {}
     model_fields = model_class.model_fields
 
     for key, orig_value in query_dict.items():
