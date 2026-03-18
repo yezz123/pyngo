@@ -6,82 +6,80 @@ build-backend = "hatchling.build"
 name = "pyngo"
 description = "Pydantic Package for Adding Models into a Django or Django Rest Framework Project ✨"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 license = "MIT"
 authors = [
-    { name = "Yasser Tahiri", email = "hello@yezz.me" },
+  { name = "Yasser Tahiri", email = "hello@yezz.me" },
 ]
 keywords = [
-    "django",
-    "django-rest-framework",
-    "pydantic",
-    "pydantic-models",
-    "pydantic-django",
+  "django",
+  "django-rest-framework",
+  "pydantic",
+  "pydantic-django",
+  "pydantic-models",
 ]
 
 classifiers = [
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Information Technology",
-    "Natural Language :: English",
-    "Framework :: Django",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3 :: Only",
-    "Topic :: Internet :: WWW/HTTP :: Session",
-    "Typing :: Typed",
+  "Framework :: Django",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Internet :: WWW/HTTP :: Session",
+  "Typing :: Typed",
 ]
 
 dependencies = [
-    "typing-extensions >=3.7.4,<4.16.0",
-    "pydantic>=2.8.2,<2.13.0",
-    "Django >=3.2.0,<6.0.0",
+  "Django >=3.2.0,<6.2.0",
+  "pydantic>=2.12,<2.14.0",
+  "typing-extensions >=4.15.0,<4.18.0",
 ]
 
 dynamic = ["version"]
 
 [project.urls]
+Funding = "https://github.com/sponsors/yezz123"
 Homepage = "https://github.com/yezz123/pyngo"
-Funding = 'https://github.com/sponsors/yezz123'
 
 [dependency-groups]
 lint = [
-    "pre-commit==4.3.0",
-    "mypy==1.17.1",
-    "ruff==0.12.12",
+  "mypy==1.19.1",
+  "pre-commit==4.5.1",
+  "ruff==0.15.6",
 ]
 test = [
-    "pytest==8.4.2",
-    "pytest-cov==6.3.0",
-    "pytest-asyncio == 1.1.0",
-    "pytest-pretty",
-    "django-stubs",
+  "django-stubs",
+  "pytest==9.0.2",
+  "pytest-asyncio == 1.3.0",
+  "pytest-cov==7.0.0",
+  "pytest-pretty",
 ]
 
 [tool.hatch.version]
 path = "pyngo/__init__.py"
-
 
 [tool.ruff]
 line-length = 120
 
 [tool.ruff.lint]
 select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "C",  # flake8-comprehensions
-    "B",  # flake8-bugbear
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  "I",  # isort
+  "C",  # flake8-comprehensions
+  "B",  # flake8-bugbear
 ]
 ignore = [
-    "E501",  # line too long, handled by black
-    "B008",  # do not perform function calls in argument defaults
-    "C901",  # too complex
+  "E501",  # line too long, handled by black
+  "B008",  # do not perform function calls in argument defaults
+  "C901",  # too complex
 ]
 mccabe = { max-complexity = 14 }
 
@@ -97,12 +95,12 @@ keep-runtime-typing = true
 [tool.coverage.run]
 source = ["pyngo", "tests"]
 branch = true
-context = '${CONTEXT}'
+context = "${CONTEXT}"
 
 [tool.coverage.paths]
 source = [
-    "pyngo",
-    "tests",
+  "pyngo",
+  "tests",
 ]
 
 [tool.mypy]
@@ -124,22 +122,22 @@ check_untyped_defs = true
 [tool.coverage.report]
 precision = 2
 exclude_lines = [
-    "pragma: no cover",
-    "raise NotImplementedError",
-    "raise NotImplemented",
-    "@overload",
-    "if TYPE_CHECKING:",
-    "if __name__ == .__main__.:",
+  "pragma: no cover",
+  "raise NotImplementedError",
+  "raise NotImplemented",
+  "@overload",
+  "if TYPE_CHECKING:",
+  "if __name__ == .__main__.:",
 ]
 
-[tool.pytest.ini_options]
-testpaths = "tests/"
+[tool.pytest]
+testpaths = ["tests/"]
 log_cli = true
 log_cli_level = "INFO"
 log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
-log_cli_date_format= "%Y-%m-%d %H:%M:%S"
-asyncio_mode= "auto"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 filterwarnings = [
-    "ignore:The default value of USE_TZ",
+  "ignore:The default value of USE_TZ",
 ]

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import types
 from typing import Literal, Optional, Type, TypedDict, Union, cast, get_args, get_origin
 

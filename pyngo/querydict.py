@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 from collections import deque
 from types import NoneType, UnionType
-from typing import Any, Type, get_args, get_origin
+from typing import TYPE_CHECKING, Any, Self, Type, get_args, get_origin
 
 from django.http import QueryDict
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
-from typing_extensions import Self
+
+if TYPE_CHECKING:
+    from pydantic.config import ExtraValues
 
 
 class QueryDictModel(BaseModel):
@@ -25,6 +29,7 @@ class QueryDictModel(BaseModel):
         obj: Any,
         *,
         strict: bool | None = None,
+        extra: ExtraValues | None = None,
         from_attributes: bool | None = None,
         context: Any | None = None,
         by_alias: bool | None = None,
