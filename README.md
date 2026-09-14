@@ -56,8 +56,10 @@ Successfully installed pyngo
 from pydantic import BaseModel
 from pyngo import openapi_params
 
+
 class Model(BaseModel):
-   bingo: int
+    bingo: int
+
 
 print(openapi_params(Model))
 ```
@@ -69,9 +71,11 @@ from typing import Optional
 from pydantic import BaseModel
 from pyngo import openapi_params
 
+
 class Model(BaseModel):
-   required_param: int
-   optional_param: Optional[int]
+    required_param: int
+    optional_param: Optional[int]
+
 
 print(openapi_params(Model))
 ```
@@ -82,19 +86,22 @@ Other fields can be set through the field’s info:
 from pydantic import BaseModel, Field
 from pyngo import openapi_params
 
+
 class WithDescription(BaseModel):
-   described_param: str = Field(
-      description="Hello World Use Me!"
-   )
+    described_param: str = Field(description="Hello World Use Me!")
+
 
 class InPath(BaseModel):
-   path_param: str = Field(location="path")
+    path_param: str = Field(location="path")
+
 
 class WithDeprecated(BaseModel):
-   deprecated_field: bool = Field(deprecated=True)
+    deprecated_field: bool = Field(deprecated=True)
+
 
 class WithNoAllowEmpty(BaseModel):
-   can_be_empty: bool = Field(allowEmptyValue=False)
+    can_be_empty: bool = Field(allowEmptyValue=False)
+
 
 print(openapi_params(WithDescription)[0]["description"])
 print(openapi_params(InPath)[0]["in"])
@@ -112,13 +119,16 @@ from django.http import QueryDict
 from pydantic import BaseModel
 from pyngo import QueryDictModel, querydict_to_dict
 
+
 class Model(BaseModel):
-   single_param: int
-   list_param: List[str]
+    single_param: int
+    list_param: List[str]
+
 
 class QueryModel(QueryDictModel):
-   single_param: int
-   list_param: List[str]
+    single_param: int
+    list_param: List[str]
+
 
 query_dict = QueryDict("single_param=20&list_param=Life")
 
@@ -136,16 +146,18 @@ print(QueryModel.model_validate(query_dict))
 from pydantic import BaseModel, ValidationError
 from pyngo import drf_error_details
 
+
 class Model(BaseModel):
-   foo: int
-   bar: str
+    foo: int
+    bar: str
+
 
 data = {"foo": "Cat"}
 
 try:
-   Model.model_validate(data)
+    Model.model_validate(data)
 except ValidationError as e:
-   print(drf_error_details(e))
+    print(drf_error_details(e))
 ```
 
 Errors descend into nested fields:
@@ -155,24 +167,27 @@ from typing import List
 from pydantic import BaseModel, ValidationError
 from pyngo import drf_error_details
 
+
 class Framework(BaseModel):
-   frm_id: int
+    frm_id: int
+
 
 class Language(BaseModel):
-   framework: List[Framework]
+    framework: List[Framework]
+
 
 data = {"framework": [{"frm_id": "not_a_number"}, {}]}
 expected_details = {
-   "framework": {
-      "0": {"frm_id": ["value is not a valid integer"]},
-      "1": {"frm_id": ["field required"]},
-   }
+    "framework": {
+        "0": {"frm_id": ["value is not a valid integer"]},
+        "1": {"frm_id": ["field required"]},
+    }
 }
 
 try:
-   Language.model_validate(data)
+    Language.model_validate(data)
 except ValidationError as e:
-   print(drf_error_details(e))
+    print(drf_error_details(e))
 ```
 
 ## Development 🚧
